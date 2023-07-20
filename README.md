@@ -25,7 +25,7 @@ The Attendance Tracker is a simple and user-friendly desktop application built u
    - Install the required libraries using `pip install -r requirements.txt`.
 
 2. **Run the Application:**
-   - Run the application by executing the `attendance_tracker.py` script with Python.
+   - Run the application by executing the `AttendanceTracker.py` script with Python.
 
 3. **New User Registration:**
    - Click on the "New User Registration" button to register a new class schedule.
