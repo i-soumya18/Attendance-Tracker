@@ -1,0 +1,113 @@
+2024-01-29 21:09:48,959 - INFO - Database tables created successfully.
+2024-01-29 21:09:48,964 - INFO - Data loaded successfully.
+2024-01-29 21:10:12,773 - INFO - Database tables created successfully.
+2024-01-29 21:10:12,777 - INFO - Data loaded successfully.
+2024-01-29 21:10:17,301 - INFO - Database tables created successfully.
+2024-01-29 21:10:17,304 - INFO - Data loaded successfully.
+2024-01-29 21:12:12,781 - INFO - Database tables created successfully.
+2024-01-29 21:12:12,785 - INFO - Data loaded successfully.
+2024-01-29 21:12:49,240 - ERROR - Error occurred while reading the class schedule: Missing optional dependency 'openpyxl'.  Use pip or conda to install openpyxl.
+2024-01-29 21:15:03,251 - INFO - Database tables created successfully.
+2024-01-29 21:15:03,254 - INFO - Data loaded successfully.
+2024-01-29 21:15:14,015 - ERROR - Error occurred while reading the class schedule: Missing optional dependency 'openpyxl'.  Use pip or conda to install openpyxl.
+2024-01-29 21:15:41,152 - INFO - Database tables created successfully.
+2024-01-29 21:15:41,156 - INFO - Data loaded successfully.
+2024-01-29 21:15:45,675 - INFO - Class added successfully: oopjLab on Monday.
+2024-01-29 21:15:45,684 - INFO - Class added successfully: Daa on Monday.
+2024-01-29 21:15:45,690 - INFO - Class added successfully: DE on Monday.
+2024-01-29 21:15:45,700 - INFO - Class added successfully: DAALAB on Tuesday.
+2024-01-29 21:15:45,712 - INFO - Class added successfully: CO on Tuesday.
+2024-01-29 21:15:45,722 - INFO - Class added successfully: OOPJ on Tuesday.
+2024-01-29 21:15:45,728 - INFO - Class added successfully: DAA on Tuesday.
+2024-01-29 21:15:45,741 - INFO - Class added successfully: DAA on Wednesday.
+2024-01-29 21:15:45,751 - INFO - Class added successfully: DE on Wednesday.
+2024-01-29 21:15:45,760 - INFO - Class added successfully: CO on Wednesday.
+2024-01-29 21:15:45,770 - INFO - Class added successfully: SDELAB on Wednesday.
+2024-01-29 21:15:45,779 - INFO - Class added successfully: DELAB on Friday.
+2024-01-29 21:15:45,791 - INFO - Class added successfully: CO on Friday.
+2024-01-29 21:15:45,798 - INFO - Class added successfully: DE on Friday.
+2024-01-29 21:15:45,809 - INFO - Class added successfully: OOPJ on Friday.
+2024-01-29 21:15:47,544 - INFO - New user registration successful.
+2024-01-29 21:15:52,942 - INFO - Displayed today's classes for Monday.
+2024-01-29 21:16:04,042 - INFO - Absent classes recorded successfully.
+2024-01-29 21:16:05,257 - INFO - Absent classes recorded successfully.
+2024-01-29 21:16:15,989 - INFO - Attendance percentage calculated successfully.
+2024-01-29 21:16:31,315 - INFO - Cancelled classes recorded successfully.
+2024-01-29 21:16:37,677 - INFO - Attendance percentage calculated successfully.
+2024-01-29 21:16:37,677 - INFO - Cancelled classes recorded successfully.
+2024-01-29 21:16:56,018 - INFO - Attendance percentage calculated successfully.
+2024-01-29 21:17:06,648 - INFO - No classes scheduled for Monday.
+2024-01-29 21:17:10,046 - INFO - Application exited.
+2024-01-29 21:22:40,134 - INFO - Database tables created successfully.
+2024-01-29 21:22:40,136 - INFO - Data loaded successfully.
+2024-01-29 21:22:45,709 - INFO - Class added successfully: oopjLab on Monday.
+2024-01-29 21:22:45,714 - INFO - Class added successfully: Daa on Monday.
+2024-01-29 21:22:45,717 - INFO - Class added successfully: DE on Monday.
+2024-01-29 21:22:45,723 - INFO - Class added successfully: DAALAB on Tuesday.
+2024-01-29 21:22:45,728 - INFO - Class added successfully: CO on Tuesday.
+2024-01-29 21:22:45,732 - INFO - Class added successfully: OOPJ on Tuesday.
+2024-01-29 21:22:45,737 - INFO - Class added successfully: DAA on Tuesday.
+2024-01-29 21:22:45,742 - INFO - Class added successfully: DAA on Wednesday.
+2024-01-29 21:22:45,747 - INFO - Class added successfully: DE on Wednesday.
+2024-01-29 21:22:45,751 - INFO - Class added successfully: CO on Wednesday.
+2024-01-29 21:22:45,755 - INFO - Class added successfully: SDELAB on Wednesday.
+2024-01-29 21:22:45,760 - INFO - Class added successfully: DELAB on Friday.
+2024-01-29 21:22:45,765 - INFO - Class added successfully: CO on Friday.
+2024-01-29 21:22:45,769 - INFO - Class added successfully: DE on Friday.
+2024-01-29 21:22:45,773 - INFO - Class added successfully: OOPJ on Friday.
+2024-01-29 21:22:47,210 - INFO - New user registration successful.
+2024-01-29 21:22:56,005 - INFO - Displayed today's classes for Monday.
+2024-01-29 21:23:05,132 - INFO - No absent classes recorded.
+2024-01-29 21:23:09,854 - INFO - Attendance percentage calculated successfully.
+2024-01-29 21:23:13,616 - INFO - Application exited.
+2024-01-29 21:25:52,657 - INFO - Database tables created successfully.
+2024-01-29 21:25:52,660 - INFO - Data loaded successfully.
+2024-01-29 21:26:04,054 - INFO - No absent classes recorded.
+2024-01-29 21:26:07,655 - INFO - Attendance percentage calculated successfully.
+2024-01-29 21:27:16,931 - INFO - Class added successfully: oopjLab on Monday.
+2024-01-29 21:27:16,936 - INFO - Class added successfully: Daa on Monday.
+2024-01-29 21:27:16,941 - INFO - Class added successfully: DE on Monday.
+2024-01-29 21:27:16,945 - INFO - Class added successfully: DAALAB on Tuesday.
+2024-01-29 21:27:16,950 - INFO - Class added successfully: CO on Tuesday.
+2024-01-29 21:27:16,956 - INFO - Class added successfully: OOPJ on Tuesday.
+2024-01-29 21:27:16,960 - INFO - Class added successfully: DAA on Tuesday.
+2024-01-29 21:27:16,965 - INFO - Class added successfully: DAA on Wednesday.
+2024-01-29 21:27:16,970 - INFO - Class added successfully: DE on Wednesday.
+2024-01-29 21:27:16,975 - INFO - Class added successfully: CO on Wednesday.
+2024-01-29 21:27:16,979 - INFO - Class added successfully: SDELAB on Wednesday.
+2024-01-29 21:27:16,984 - INFO - Class added successfully: DELAB on Friday.
+2024-01-29 21:27:16,988 - INFO - Class added successfully: CO on Friday.
+2024-01-29 21:27:16,993 - INFO - Class added successfully: DE on Friday.
+2024-01-29 21:27:16,997 - INFO - Class added successfully: OOPJ on Friday.
+2024-01-29 21:27:18,915 - INFO - New user registration successful.
+2024-01-29 21:27:22,138 - INFO - Displayed today's classes for Monday.
+2024-01-29 21:27:37,006 - INFO - Absent classes recorded successfully.
+2024-01-29 21:27:38,860 - INFO - Absent classes recorded successfully.
+2024-01-29 21:27:43,689 - INFO - Attendance percentage calculated successfully.
+2024-01-29 21:27:51,151 - INFO - Application exited.
+2024-01-29 21:30:25,656 - INFO - Database tables created successfully.
+2024-01-29 21:30:25,659 - INFO - Data loaded successfully.
+2024-01-29 21:30:29,933 - INFO - Displayed today's classes for Monday.
+2024-01-29 21:30:36,432 - INFO - No classes scheduled for Monday.
+2024-01-29 21:30:39,786 - INFO - Attendance percentage calculated successfully.
+2024-01-29 21:30:45,027 - INFO - Class added successfully: oopjLab on Monday.
+2024-01-29 21:30:45,032 - INFO - Class added successfully: Daa on Monday.
+2024-01-29 21:30:45,037 - INFO - Class added successfully: DE on Monday.
+2024-01-29 21:30:45,042 - INFO - Class added successfully: DAALAB on Tuesday.
+2024-01-29 21:30:45,046 - INFO - Class added successfully: CO on Tuesday.
+2024-01-29 21:30:45,051 - INFO - Class added successfully: OOPJ on Tuesday.
+2024-01-29 21:30:45,055 - INFO - Class added successfully: DAA on Tuesday.
+2024-01-29 21:30:45,059 - INFO - Class added successfully: DAA on Wednesday.
+2024-01-29 21:30:45,063 - INFO - Class added successfully: DE on Wednesday.
+2024-01-29 21:30:45,068 - INFO - Class added successfully: CO on Wednesday.
+2024-01-29 21:30:45,073 - INFO - Class added successfully: SDELAB on Wednesday.
+2024-01-29 21:30:45,078 - INFO - Class added successfully: DELAB on Friday.
+2024-01-29 21:30:45,082 - INFO - Class added successfully: CO on Friday.
+2024-01-29 21:30:45,085 - INFO - Class added successfully: DE on Friday.
+2024-01-29 21:30:45,089 - INFO - Class added successfully: OOPJ on Friday.
+2024-01-29 21:30:46,612 - INFO - New user registration successful.
+2024-01-29 21:30:49,711 - INFO - Displayed today's classes for Monday.
+2024-01-29 21:30:56,094 - INFO - Absent classes recorded successfully.
+2024-01-29 21:30:57,332 - INFO - Absent classes recorded successfully.
+2024-01-29 21:31:03,216 - INFO - Attendance percentage calculated successfully.
+2024-01-29 21:31:06,611 - INFO - Application exited.
