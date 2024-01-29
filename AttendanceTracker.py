@@ -3,10 +3,15 @@ from tkinter import filedialog, messagebox
 import pandas as pd
 import sqlite3
 import datetime
-
+import logging
+import csv
 
 class AttendanceTracker:
     def __init__(self, root):
+        # Initialize logging
+        logging.basicConfig(filename='attendance_tracker.log', level=logging.INFO,
+                            format='%(asctime)s - %(levelname)s - %(message)s')
+
         self.root = root
         self.root.title("Attendance Tracker")
 
@@ -82,6 +87,12 @@ class AttendanceTracker:
                                      command=self.exit_application, font=("Arial", 12, "bold"))
         self.exit_button.pack(side="left", padx=10, pady=10)
 
+    def log_info(self, message):
+        logging.info(message)
+
+    def log_error(self, message):
+        logging.error(message)
+
     def new_user_registration(self):
         # Prompt the user to select a class schedule file
         file_path = filedialog.askopenfilename(filetypes=[("Excel Files", "*.xlsx")])
@@ -98,175 +109,271 @@ class AttendanceTracker:
                 # Save the class schedule data permanently
                 df.to_excel("class_schedule_data.xlsx", index=False)
                 messagebox.showinfo("New User Registration", "Class schedule registered successfully!")
+                self.log_info("New user registration successful.")
             except Exception as e:
                 messagebox.showerror("Error", f"Error occurred while reading the class schedule: {str(e)}")
+                self.log_error(f"Error occurred while reading the class schedule: {str(e)}")
         else:
             messagebox.showwarning("Warning", "No file selected. Registration cancelled.")
+            self.log_info("New user registration cancelled: No file selected.")
 
     def generate_schedule_template(self):
         template_file = filedialog.asksaveasfilename(defaultextension=".xlsx", filetypes=[("Excel Files", "*.xlsx")])
         if template_file:
-            days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-            df = pd.DataFrame(columns=["Day"] + [f"Class{i}" for i in range(1, 7)])
-            df["Day"] = days
-            df.to_excel(template_file, index=False)
-            messagebox.showinfo("Schedule Template",
-                                "Schedule template generated successfully!\nPlease fill in the class details in the Excel file.")
+            try:
+                days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+                df = pd.DataFrame(columns=["Day"] + [f"Class{i}" for i in range(1, 7)])
+                df["Day"] = days
+                df.to_excel(template_file, index=False)
+                messagebox.showinfo("Schedule Template",
+                                    "Schedule template generated successfully!\nPlease fill in the class details in the Excel file.")
+                self.log_info("Schedule template generated successfully.")
+            except Exception as e:
+                messagebox.showerror("Error", f"Error occurred while generating schedule template: {str(e)}")
+                self.log_error(f"Error occurred while generating schedule template: {str(e)}")
         else:
             messagebox.showwarning("Warning", "No file selected. Template generation cancelled.")
+            self.log_info("Template generation cancelled: No file selected.")
+
 
     def show_today_classes(self):
         today = datetime.datetime.now().strftime("%A")
         classes = self.schedule.get(today, [])
-        if classes:
-            class_list = "\n".join(classes)
-            messagebox.showinfo("Today's Classes", f"Classes for {today}:\n\n{class_list}")
-        else:
-            messagebox.showinfo("Today's Classes", f"No classes scheduled for {today}.")
+        try:
+            if classes:
+                class_list = "\n".join(classes)
+                messagebox.showinfo("Today's Classes", f"Classes for {today}:\n\n{class_list}")
+                self.log_info(f"Displayed today's classes for {today}.")
+            else:
+                messagebox.showinfo("Today's Classes", f"No classes scheduled for {today}.")
+                self.log_info(f"No classes scheduled for {today}.")
+        except Exception as e:
+            messagebox.showerror("Error", f"Error occurred while displaying today's classes: {str(e)}")
+            self.log_error(f"Error occurred while displaying today's classes: {str(e)}")
 
     def mark_absent_classes(self):
         today = datetime.datetime.now().strftime("%A")
         classes = self.schedule.get(today, [])
-        if classes:
-            absent_classes = []
-            for class_name in classes:
-                response = messagebox.askyesno("Absent Classes", f"Did you attend the class: {class_name}?")
-                if not response:
-                    absent_classes.append(class_name)
-            if absent_classes:
-                self.store_absent_classes(absent_classes)
-                messagebox.showinfo("Absent Classes", "Absent classes recorded successfully!")
+        try:
+            if classes:
+                absent_classes = []
+                for class_name in classes:
+                    response = messagebox.askyesno("Absent Classes", f"Did you attend the class: {class_name}?")
+                    if not response:
+                        absent_classes.append(class_name)
+                if absent_classes:
+                    self.store_absent_classes(absent_classes)
+                    messagebox.showinfo("Absent Classes", "Absent classes recorded successfully!")
+                    self.log_info("Absent classes recorded successfully.")
+                else:
+                    messagebox.showinfo("Absent Classes", "No absent classes recorded.")
+                    self.log_info("No absent classes recorded.")
             else:
-                messagebox.showinfo("Absent Classes", "No absent classes recorded.")
-        else:
-            messagebox.showinfo("Absent Classes", f"No classes scheduled for {today}.")
+                messagebox.showinfo("Absent Classes", f"No classes scheduled for {today}.")
+                self.log_info(f"No classes scheduled for {today}.")
+        except Exception as e:
+            messagebox.showerror("Error", f"Error occurred while marking absent classes: {str(e)}")
+            self.log_error(f"Error occurred while marking absent classes: {str(e)}")
 
     def mark_cancelled_class(self):
         today = datetime.datetime.now().strftime("%A")
         classes = self.schedule.get(today, [])
-        if classes:
-            cancelled_classes = []
-            for class_name in classes:
-                response = messagebox.askyesno("Cancelled Class", f"Is the class cancelled: {class_name}?")
-                if response:
-                    cancelled_classes.append(class_name)
-            if cancelled_classes:
-                self.store_cancelled_classes(cancelled_classes)
-                messagebox.showinfo("Cancelled Class", "Cancelled classes recorded successfully!")
-                self.calculate_attendance()  # Recalculate attendance after marking cancelled classes
+        try:
+            if classes:
+                cancelled_classes = []
+                for class_name in classes:
+                    response = messagebox.askyesno("Cancelled Class", f"Is the class cancelled: {class_name}?")
+                    if response:
+                        cancelled_classes.append(class_name)
+                if cancelled_classes:
+                    self.store_cancelled_classes(cancelled_classes)
+                    messagebox.showinfo("Cancelled Class", "Cancelled classes recorded successfully!")
+                    self.calculate_attendance()  # Recalculate attendance after marking cancelled classes
+                    self.log_info("Cancelled classes recorded successfully.")
+                else:
+                    messagebox.showinfo("Cancelled Class", "No cancelled classes recorded.")
+                    self.log_info("No cancelled classes recorded.")
             else:
-                messagebox.showinfo("Cancelled Class", "No cancelled classes recorded.")
-        else:
-            messagebox.showinfo("Cancelled Class", f"No classes scheduled for {today}.")
+                messagebox.showinfo("Cancelled Class", f"No classes scheduled for {today}.")
+                self.log_info(f"No classes scheduled for {today}.")
+        except Exception as e:
+            messagebox.showerror("Error", f"Error occurred while marking cancelled class: {str(e)}")
+            self.log_error(f"Error occurred while marking cancelled class: {str(e)}")
 
     def calculate_attendance(self):
         attendance_percentage = {}
 
-        for day, class_names in self.schedule.items():
-            for class_name in class_names:
-                total_classes = len(class_names)
-                attended_classes = total_classes - self.absences.get(class_name, 0)
+        try:
+            for day, class_names in self.schedule.items():
+                for class_name in class_names:
+                    total_classes = len(class_names)
+                    attended_classes = total_classes - self.absences.get(class_name, 0)
 
-                # Exclude cancelled classes from attended_classes
-                cancelled_classes = self.cancelled_classes.get(class_name, 0)
-                attended_classes -= cancelled_classes
+                    # Exclude cancelled classes from attended_classes
+                    cancelled_classes = self.cancelled_classes.get(class_name, 0)
+                    attended_classes -= cancelled_classes
 
-                percentage = (attended_classes / total_classes) * 100 if total_classes > 0 else 0
+                    percentage = (attended_classes / total_classes) * 100 if total_classes > 0 else 0
 
-                attendance_percentage[class_name] = round(percentage, 2)
+                    attendance_percentage[class_name] = round(percentage, 2)
 
-        attendance_text = "\nAttendance Percentage:\n"
-        for class_name, percentage in attendance_percentage.items():
-            attendance_text += f"{class_name}: {percentage}%\n"
+            attendance_text = "\nAttendance Percentage:\n"
+            for class_name, percentage in attendance_percentage.items():
+                attendance_text += f"{class_name}: {percentage}%\n"
 
-        messagebox.showinfo("Attendance Percentage", attendance_text)
+            messagebox.showinfo("Attendance Percentage", attendance_text)
+            self.log_info("Attendance percentage calculated successfully.")
+        except Exception as e:
+            messagebox.showerror("Error", f"Error occurred while calculating attendance: {str(e)}")
+            self.log_error(f"Error occurred while calculating attendance: {str(e)}")
 
     def create_tables(self):
-        # Create the 'schedule' table if it doesn't exist
-        self.conn.execute('''CREATE TABLE IF NOT EXISTS schedule
-                               (day TEXT, class_name TEXT)''')
+        try:
+            # Create the 'schedule' table if it doesn't exist
+            self.conn.execute('''CREATE TABLE IF NOT EXISTS schedule
+                                   (day TEXT, class_name TEXT)''')
 
-        # Create the 'absences' table if it doesn't exist
-        self.conn.execute('''CREATE TABLE IF NOT EXISTS absences
-                               (class_name TEXT, absences INTEGER)''')
+            # Create the 'absences' table if it doesn't exist
+            self.conn.execute('''CREATE TABLE IF NOT EXISTS absences
+                                   (class_name TEXT, absences INTEGER)''')
 
-        # Create the 'cancelled_classes' table if it doesn't exist
-        self.conn.execute('''CREATE TABLE IF NOT EXISTS cancelled_classes
-                               (class_name TEXT, cancelled INTEGER)''')
+            # Create the 'cancelled_classes' table if it doesn't exist
+            self.conn.execute('''CREATE TABLE IF NOT EXISTS cancelled_classes
+                                   (class_name TEXT, cancelled INTEGER)''')
+
+            self.log_info("Database tables created successfully.")
+        except Exception as e:
+            self.log_error(f"Error occurred while creating database tables: {str(e)}")
 
     def load_data(self):
-        # Load schedule from the database
-        cursor = self.conn.cursor()
-        cursor.execute("SELECT day, class_name FROM schedule")
-        rows = cursor.fetchall()
-        for row in rows:
-            day, class_name = row
+        try:
+            # Load schedule from the database
+            cursor = self.conn.cursor()
+            cursor.execute("SELECT day, class_name FROM schedule")
+            rows = cursor.fetchall()
+            for row in rows:
+                day, class_name = row
+                if day in self.schedule:
+                    self.schedule[day].append(class_name)
+                else:
+                    self.schedule[day] = [class_name]
+
+            # Load absences from the database
+            cursor.execute("SELECT class_name, absences FROM absences")
+            rows = cursor.fetchall()
+            for row in rows:
+                class_name, absences = row
+                self.absences[class_name] = absences
+
+            # Load cancelled classes from the database
+            cursor.execute("SELECT class_name, cancelled FROM cancelled_classes")
+            rows = cursor.fetchall()
+            for row in rows:
+                class_name, cancelled = row
+                self.cancelled_classes[class_name] = cancelled
+
+            self.log_info("Data loaded successfully.")
+        except Exception as e:
+            self.log_error(f"Error occurred while loading data: {str(e)}")
+
+    def add_class(self, day, class_name):
+        try:
             if day in self.schedule:
                 self.schedule[day].append(class_name)
             else:
                 self.schedule[day] = [class_name]
+            self.absences[class_name] = 0
 
-        # Load absences from the database
-        cursor.execute("SELECT class_name, absences FROM absences")
-        rows = cursor.fetchall()
-        for row in rows:
-            class_name, absences = row
-            self.absences[class_name] = absences
+            # Insert the class into the 'schedule' table
+            self.conn.execute("INSERT INTO schedule (day, class_name) VALUES (?, ?)", (day, class_name))
+            self.conn.commit()
 
-        # Load cancelled classes from the database
-        cursor.execute("SELECT class_name, cancelled FROM cancelled_classes")
-        rows = cursor.fetchall()
-        for row in rows:
-            class_name, cancelled = row
-            self.cancelled_classes[class_name] = cancelled
-
-    def add_class(self, day, class_name):
-        if day in self.schedule:
-            self.schedule[day].append(class_name)
-        else:
-            self.schedule[day] = [class_name]
-        self.absences[class_name] = 0
-
-        # Insert the class into the 'schedule' table
-        self.conn.execute("INSERT INTO schedule (day, class_name) VALUES (?, ?)", (day, class_name))
-        self.conn.commit()
+            self.log_info(f"Class added successfully: {class_name} on {day}.")
+        except Exception as e:
+            self.log_error(f"Error occurred while adding class: {str(e)}")
 
     def store_absent_classes(self, absent_classes):
         today = datetime.datetime.now().strftime("%A")
-        for class_name in absent_classes:
-            if class_name in self.absences:
-                self.absences[class_name] += 1
-            else:
-                self.absences[class_name] = 1
-            # Update the absences in the 'absences' table
-            self.conn.execute("INSERT INTO absences (class_name, absences) VALUES (?, ?)",
-                              (class_name, self.absences[class_name]))
-        self.conn.commit()
+        try:
+            for class_name in absent_classes:
+                if class_name in self.absences:
+                    self.absences[class_name] += 1
+                else:
+                    self.absences[class_name] = 1
+                # Update the absences in the 'absences' table
+                self.conn.execute("INSERT INTO absences (class_name, absences) VALUES (?, ?)",
+                                  (class_name, self.absences[class_name]))
+            self.conn.commit()
+            self.log_info("Absent classes recorded successfully.")
+        except Exception as e:
+            self.log_error(f"Error occurred while storing absent classes: {str(e)}")
 
     def store_cancelled_classes(self, cancelled_classes):
         today = datetime.datetime.now().strftime("%A")
-        for class_name in cancelled_classes:
-            if class_name in self.cancelled_classes:
-                self.cancelled_classes[class_name] += 1
-            else:
-                self.cancelled_classes[class_name] = 1
-            # Update the cancelled classes in the 'cancelled_classes' table
-            self.conn.execute("INSERT INTO cancelled_classes (class_name, cancelled) VALUES (?, ?)",
-                              (class_name, self.cancelled_classes[class_name]))
-        self.conn.commit()
+        try:
+            for class_name in cancelled_classes:
+                if class_name in self.cancelled_classes:
+                    self.cancelled_classes[class_name] += 1
+                else:
+                    self.cancelled_classes[class_name] = 1
+                # Update the cancelled classes in the 'cancelled_classes' table
+                self.conn.execute("INSERT INTO cancelled_classes (class_name, cancelled) VALUES (?, ?)",
+                                  (class_name, self.cancelled_classes[class_name]))
+            self.conn.commit()
+            self.log_info("Cancelled classes recorded successfully.")
+        except Exception as e:
+            self.log_error(f"Error occurred while storing cancelled classes: {str(e)}")
+
+    def generate_updated_attendance_csv(self, output_file="updated_attendance.csv"):
+        try:
+            with open(output_file, mode='w', newline='') as csv_file:
+                fieldnames = ['Day', 'Class', 'Attendance Percentage']
+                writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+
+                writer.writeheader()
+
+                for day, class_names in self.schedule.items():
+                    for class_name in class_names:
+                        total_classes = len(class_names)
+                        attended_classes = total_classes - self.absences.get(class_name, 0)
+                        cancelled_classes = self.cancelled_classes.get(class_name, 0)
+
+                        # Exclude cancelled classes from attended_classes
+                        attended_classes -= cancelled_classes
+
+                        percentage = (attended_classes / total_classes) * 100 if total_classes > 0 else 0
+
+                        writer.writerow({
+                            'Day': day,
+                            'Class': class_name,
+                            'Attendance Percentage': round(percentage, 2)
+                        })
+
+            messagebox.showinfo("Updated Attendance CSV", f"Updated attendance data saved to {output_file}.")
+            self.log_info(f"Updated attendance data saved to {output_file}.")
+        except Exception as e:
+            messagebox.showerror("Error", f"Error occurred while generating updated attendance CSV: {str(e)}")
+            self.log_error(f"Error occurred while generating updated attendance CSV: {str(e)}")
 
     def exit_application(self):
-        confirm = messagebox.askyesno("Exit", "Are you sure you want to exit the application?")
-        if confirm:
-            self.root.destroy()
+        try:
+            confirm = messagebox.askyesno("Exit", "Are you sure you want to exit the application?")
+            if confirm:
+                self.root.destroy()
+                self.log_info("Application exited.")
+        except Exception as e:
+            self.log_error(f"Error occurred while exiting application: {str(e)}")
 
 
 def main():
-    root = tk.Tk()
-    app = AttendanceTracker(root)
-    root.mainloop()
-
+    try:
+        root = tk.Tk()
+        app = AttendanceTracker(root)
+        root.mainloop()
+    except Exception as e:
+        log_error(f"Error occurred in main: {str(e)}")
 
 if __name__ == "__main__":
     main()
+
 
